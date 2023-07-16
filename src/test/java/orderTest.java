@@ -62,6 +62,7 @@ public class orderTest {
 
         HomePage hPage = new HomePage(driver);
 
+
         hPage.waitForLoadHeader();
         // скролл до средней кнопки
         WebElement element = driver.findElement(By.xpath("/html/body/div/div/div[1]/div[5]/div[2]/div/div[8]/div[1]/div"));

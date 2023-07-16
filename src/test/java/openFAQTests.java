@@ -55,6 +55,7 @@ public class openFAQTests {
         hPage.answerToBeVisible7();
         hPage.answerToBeAsExpected7();
 // еще промотка(из-за кнопки куки)
+
         WebElement element1 = driver.findElement(By.xpath("/html/body/div/div/div[1]/div[5]/div[2]/div/div[8]/div[1]/div"));
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element1);
 

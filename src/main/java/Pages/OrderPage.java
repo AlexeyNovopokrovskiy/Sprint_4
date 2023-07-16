@@ -58,6 +58,7 @@ public class OrderPage {
     //локатор для финального сообщения
     private By orderFinished = By.className("Order_ModalHeader__3FDaJ");
 
+
     //методы
     public OrderPage(WebDriver driver) {
         this.driver = driver;

@@ -58,6 +58,7 @@ public class HomePage {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("Home_SubHeader__zwi_E")));
     }
 
+
     // нажать на кнопку orderButtonTop
     public void orderButtonTopClick() {
         driver.findElement(orderButtonTop).click();
