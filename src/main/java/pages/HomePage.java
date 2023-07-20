@@ -88,12 +88,12 @@ public class HomePage {
     }
 
     private By faqButton(int numberOfFAQBox){
-        String ltFAQ = String.format(locatorTemplateForFAQ + numberOfFAQBox);
+        String ltFAQ = String.format(locatorTemplateForFAQ + "%s", numberOfFAQBox);
         return By.id(ltFAQ);
     }
 
     private By response(int numberOfResponse){
-        String ltResponse = String.format(locatorTemplateForResponse + numberOfResponse);
+        String ltResponse = String.format(locatorTemplateForResponse + "%s", numberOfResponse);
         return By.id(ltResponse);
     }
     //геттер сайта

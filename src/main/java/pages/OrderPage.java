@@ -157,17 +157,17 @@ public class OrderPage {
     }
 
     public By subSt(String subStation){
-        String station = String.format(templForSubSt1 + subStation + templForSubSt2);
+        String station = String.format(templForSubSt1 + "%s" + templForSubSt2, subStation);
         return By.xpath(station);
     }
 
     public By calendar(int day){
-        String cal = String.format(templForCalendar1 +  day + templForCalendar2);
+        String cal = String.format(templForCalendar1 + "%s"  + templForCalendar2, day);
         return By.xpath(cal);
     }
 
     public By period (String peri){
-        String perio = String.format(templForPeriod1 + peri + templForPeriod2);
+        String perio = String.format(templForPeriod1 + "%s" + templForPeriod2, peri);
         return By.xpath(perio);
     }
 }
