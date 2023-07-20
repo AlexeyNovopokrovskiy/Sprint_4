@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -13,50 +13,62 @@ public class OrderPage {
 
     private WebDriver driver;
 
+    private final String templForSubSt1 = ".//*[text() = '";
+    private final String templForSubSt2 = "']/parent::*/parent::*";
+    private final String templForCalendar1 = ".//div[not(contains(@class,'outside-month')) and (text() = '";
+    private final String templForCalendar2 = "')]";
+    private final String templForPeriod1 = ".//div[contains(text(),'";
+    private final String templForPeriod2 =  "')]";
+
+
     // локатор для имя
-    private By name = By.xpath("html/body/div/div/div[2]/div[2]/div[1]/input[@placeholder='* Имя']");
+    private By name = By.xpath(".//input[@placeholder='* Имя']");
 
     // локатор для фамилия
 
-    private By surname = By.xpath("/html/body/div/div/div[2]/div[2]/div[2]/input[@placeholder='* Фамилия']");
+    private By surname = By.xpath(".//input[@placeholder='* Фамилия']");
 
     // локатор для адреса
-    private By adress = By.xpath("/html/body/div/div/div[2]/div[2]/div[3]/input[@placeholder='* Адрес: куда привезти заказ']");
+    private By adress = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
 
     // локатор для станция метро
 
-    private By subwayStation = By.xpath("/html/body/div/div/div[2]/div[2]/div[4]/div/div/input[@placeholder='* Станция метро']");
+    private By subwayStation = By.xpath(".//input[@placeholder='* Станция метро']");
 
     // локатор для телефона
 
-    private By phone = By.xpath("/html/body/div/div/div[2]/div[2]/div[5]/input");
+    private By phone = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
 
     // локатор для кнопки далее
 
-    private By nextButton = By.xpath("/html/body/div/div/div[2]/div[3]/button");
+    private By nextButton = By.xpath(".//div[2]//div[3]/button");
+
 
     // локатор для даты
-    private By fromdateto = By.xpath("/html/body/div/div/div[2]/div[2]/div[1]/div/div/input");
+    private By fromdateto = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
 
 
     // локаторы для цвета самоката
-    private By colourGrey = By.xpath("/html/body/div/div/div[2]/div[2]/div[3]/label[2]");
-    private By colourWhite = By.xpath("/html/body/div/div/div[2]/div[2]/div[3]/label[1]");
+    private By colourGrey = By.xpath(".//div[3]/label[2]");
+    private By colourWhite = By.xpath(".//div[3]/label[1]");
 
     // локатор для срок
-    private By days = By.xpath("/html/body/div/div/div[2]/div[2]/div[2]/div");
+    private By days = By.className("Dropdown-placeholder");
 
     // локатор для комментарий
-    private By comment = By.xpath("/html/body/div/div/div[2]/div[2]/div[4]/input");
+    private By comment = By.xpath(".//div[4]/input");
 
     // локатор для кнопки далее
 
-    private By next2Button = By.xpath("/html/body/div/div/div[2]/div[3]/button[2]");
+    private By next2Button = By.xpath(".//div[2]/div[3]/button[2]");
     // локатор для кнопки да
 
-    private By yesButton = By.xpath("/html/body/div/div/div[2]/div[5]/div[2]/button[2]");
+    private By yesButton = By.xpath(".//div[5]/div[2]/button[2]");
     //локатор для финального сообщения
     private By orderFinished = By.className("Order_ModalHeader__3FDaJ");
+
+    private By listOfMetroEnd = By.xpath(".//li[225]");
+
 
 
     //методы
@@ -76,35 +88,40 @@ public class OrderPage {
         driver.findElement(adress).sendKeys(address);
     }
     //заполнение станции метро
-    public void fillSubway(int subSt){
+    public void fillSubway(String subSt){
         driver.findElement(subwayStation).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        WebElement element3 = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[2]/div[4]/div/div[2]/ul/li[225]"));
+        WebElement element3 = driver.findElement(subSt(subSt));
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element3);
-        driver.findElement(By.xpath("/html/body/div/div/div[2]/div[2]/div[4]/div/div[2]/ul/li["+ subSt +"]/button")).click();
+        driver.findElement(subSt(subSt)).click();
     }
 
     //заполнение номера телефона
     public void fillPhone(String telefon){
         driver.findElement(phone).sendKeys(telefon);
     }
+
     //нажатие на далее 1ый раз
     public void pressNextButton(){
+        WebElement element5 = driver.findElement(nextButton);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element5);
         driver.findElement(nextButton).click();
     }
-    // заполнение даты когда привести самокат
-    public void fillDate(int weekNu, int dayNum){
+
+    // заполнение даты когда привезти самокат
+    public void fillDate(int dayNum){
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(fromdateto).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.findElement(By.xpath("/html/body/div/div/div[2]/div[2]/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div["+ weekNu + "]/div["+ dayNum +"]")).click();
+        driver.findElement(calendar(dayNum)).click();
     }
+
     //заполнить срок аренды
-    public void fillDays(int per){
+    public void fillDays(String per){
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(days).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.findElement(By.xpath("/html/body/div/div/div[2]/div[2]/div[2]/div[2]/div[" + per + "]")).click();
+        driver.findElement(period(per)).click();
     }
     //заполнение цвета
     public void chooseColour(int col) {
@@ -119,8 +136,11 @@ public class OrderPage {
     public void fillComment(String com){
         driver.findElement(comment).sendKeys(com);
     }
+
     //нажатие второй конпки далее
     public void pressNext2Button(){
+        WebElement element4 = driver.findElement(next2Button);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element4);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(next2Button).click();
     }
@@ -133,6 +153,21 @@ public class OrderPage {
     // проверка что заказ создан
     public void orderFinishedCheck(){
         new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.textToBe(orderFinished, "Заказ оформлен"));
+                .until(ExpectedConditions.textToBePresentInElementLocated(orderFinished, "Заказ оформлен"));
+    }
+
+    public By subSt(String subStation){
+        String station = String.format(templForSubSt1 + subStation + templForSubSt2);
+        return By.xpath(station);
+    }
+
+    public By calendar(int day){
+        String cal = String.format(templForCalendar1 +  day + templForCalendar2);
+        return By.xpath(cal);
+    }
+
+    public By period (String peri){
+        String perio = String.format(templForPeriod1 + peri + templForPeriod2);
+        return By.xpath(perio);
     }
 }
